@@ -6,7 +6,7 @@ from datetime import datetime
 
 # 配置GitHub信息（替换为你的仓库信息）
 GITHUB_USER = "1849083010n-cell"
-GITHUB_REPO = "herb-demo-1h"  # 如 herb-database
+GITHUB_REPO = "herb-pending-suggestions"  # 如 herb-database
 GITHUB_TOKEN = st.secrets["github"]["token"]  # 建议用Streamlit Secrets存储Token
 PENDING_FILE_PATH = "pending.json"  # 仓库中存储建议的文件路径
 
