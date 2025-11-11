@@ -5,6 +5,10 @@ import json
 from datetime import datetime
 import os
 import streamlit as st
+import streamlit as st
+
+# 用三引号包裹 HTML 代码（关键：让 Python 识别为字符串）
+toggle_switch_html = """
 <div data-show-ax-label="true" data-state="On" style="width: 64px; padding: 2px; background: var(--Accents-Green, #34C759); overflow: hidden; border-radius: 100px; justify-content: space-between; align-items: center; display: inline-flex">
   <div data-svg-wrapper>
     <svg width="21" height="10" viewBox="0 0 21 10" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -17,6 +21,18 @@ import streamlit as st
     </svg>
   </div>
 </div>
+"""
+
+# Streamlit 页面标题（可选，仅为美观）
+st.title("开关插件演示")
+
+# 嵌入 HTML 到 Streamlit（宽高适配开关大小）
+st.components.html(
+    html=toggle_switch_html,
+    width=80,  # 略大于开关宽度64px，避免截断
+    height=40,  # 适配开关高度，确保完整显示
+    scrolling=False
+)
 
 st.markdown(html_code, unsafe_allow_html=True)
 # --------------------------
