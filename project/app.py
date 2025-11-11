@@ -5,11 +5,18 @@ import json
 from datetime import datetime
 import os
 import streamlit as st
-html_code = """
-<div style="width: 750px; height: 47px; background: #D9D9D9; text-align: center; color: black; font-size: 36px;">
-  提问
+<div data-show-ax-label="true" data-state="On" style="width: 64px; padding: 2px; background: var(--Accents-Green, #34C759); overflow: hidden; border-radius: 100px; justify-content: space-between; align-items: center; display: inline-flex">
+  <div data-svg-wrapper>
+    <svg width="21" height="10" viewBox="0 0 21 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="10" width="1" height="10" fill="white"/>
+    </svg>
+  </div>
+  <div data-svg-wrapper style="position: relative">
+    <svg width="39" height="24" viewBox="0 0 39 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="39" height="24" rx="12" fill="white"/>
+    </svg>
+  </div>
 </div>
-"""
 
 st.markdown(html_code, unsafe_allow_html=True)
 # --------------------------
