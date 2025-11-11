@@ -5,10 +5,6 @@ import json
 from datetime import datetime
 import os
 
-st.markdown(html_code, unsafe_allow_html=True)
-# --------------------------
-# GitHub Token 配置（已适配 Streamlit Cloud Secrets）
-# --------------------------
 try:
     GITHUB_TOKEN = st.secrets["github"]["token"]
 except KeyError:
