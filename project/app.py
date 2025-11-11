@@ -7,21 +7,76 @@ import os
 import streamlit as st
 import streamlit as st
 
-# 用三引号包裹 HTML 代码（关键：让 Python 识别为字符串）
-toggle_switch_html = """
-<div data-show-ax-label="true" data-state="On" style="width: 64px; padding: 2px; background: var(--Accents-Green, #34C759); overflow: hidden; border-radius: 100px; justify-content: space-between; align-items: center; display: inline-flex">
-  <div data-svg-wrapper>
+import streamlit as st
+
+# 带 JavaScript 交互的开关 HTML 代码
+interactive_toggle_html = """
+<!-- 开关容器：绑定点击事件 -->
+<div id="toggleSwitch" data-show-ax-label="true" data-state="On" 
+     style="width: 64px; padding: 2px; background: #34C759; overflow: hidden; border-radius: 100px; 
+     justify-content: space-between; align-items: center; display: inline-flex; cursor: pointer;">
+  <!-- 关闭状态的竖线（默认隐藏） -->
+  <div data-svg-wrapper id="offLine" style="display: none;">
     <svg width="21" height="10" viewBox="0 0 21 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="10" width="1" height="10" fill="white"/>
+      <rect x="10" width="1" height="10" fill="white"/>
     </svg>
   </div>
-  <div data-svg-wrapper style="position: relative">
+  <!-- 开关滑块 -->
+  <div data-svg-wrapper id="toggleKnob" style="position: relative; transition: transform 0.3s ease;">
     <svg width="39" height="24" viewBox="0 0 39 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect width="39" height="24" rx="12" fill="white"/>
+      <rect width="39" height="24" rx="12" fill="white"/>
     </svg>
   </div>
 </div>
+
+<!-- 状态显示文本（可选，用于直观展示状态） -->
+<div id="toggleStatus" style="margin-top: 10px; font-size: 16px; font-family: Inter; color: #333;">
+  状态：开启（On）
+</div>
+
+<!-- JavaScript 交互逻辑：点击切换状态 -->
+<script>
+// 获取开关元素
+const toggleSwitch = document.getElementById('toggleSwitch');
+const toggleKnob = document.getElementById('toggleKnob');
+const offLine = document.getElementById('offLine');
+const toggleStatus = document.getElementById('toggleStatus');
+
+// 绑定点击事件
+toggleSwitch.addEventListener('click', function() {
+  // 获取当前状态
+  const currentState = this.getAttribute('data-state');
+  
+  if (currentState === 'On') {
+    // 切换到 Off 状态
+    this.setAttribute('data-state', 'Off');
+    this.style.background = '#D9D9D9'; // 灰色背景
+    toggleKnob.style.transform = 'translateX(-25px)'; // 滑块左移
+    offLine.style.display = 'block'; // 显示关闭状态竖线
+    toggleStatus.textContent = '状态：关闭（Off）';
+  } else {
+    // 切换到 On 状态
+    this.setAttribute('data-state', 'On');
+    this.style.background = '#34C759'; // 绿色背景
+    toggleKnob.style.transform = 'translateX(0)'; // 滑块右移
+    offLine.style.display = 'none'; // 隐藏竖线
+    toggleStatus.textContent = '状态：开启（On）';
+  }
+});
+</script>
 """
+
+# Streamlit 页面
+st.title("可交互开关插件演示")
+st.subheader("点击开关切换 On/Off 状态")
+
+# 嵌入交互开关到 Streamlit
+st.components.html(
+    html=interactive_toggle_html,
+    width=100,  # 适配开关+状态文本宽度
+    height=80,  # 适配开关+状态文本高度
+    scrolling=False
+)
 
 # Streamlit 页面标题（可选，仅为美观）
 st.title("开关插件演示")
