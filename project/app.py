@@ -4,6 +4,25 @@ import requests
 import json
 from datetime import datetime
 import os
+import streamlit as st
+
+# 1. 定义网页插件的 HTML + CSS 代码（整合你提供的样式）
+plugin_html = """
+<!-- 插件结构：灰色块 + 居中标题 -->
+<div style="width: 750px; height: 47px; background: #D9D9D9; margin: 0 auto;"></div>
+<div style="text-align: center; color: black; font-size: 36px; font-family: Inter; font-weight: 400; margin-top: 20px;">
+    提问：这是在 Streamlit 中运行的网页插件
+</div>
+"""
+
+# 2. 在 Streamlit 中嵌入插件（设置宽高为自适应，或固定值）
+st.title("Streamlit 网页插件演示（静态）")
+st.components.html(
+    html=plugin_html,
+    width=None,  # None 表示自适应 Streamlit 页面宽度
+    height=150,  # 高度根据插件内容调整
+    scrolling=False  # 是否显示滚动条（静态插件一般关闭）
+)
 
 # --------------------------
 # GitHub Token 配置（已适配 Streamlit Cloud Secrets）
