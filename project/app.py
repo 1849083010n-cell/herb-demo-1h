@@ -4,6 +4,83 @@ import requests
 import json
 from datetime import datetime
 import os
+from streamlit.components.v1 import html  # 改用 components.v1.html 更稳定
+
+# 带 JavaScript 交互的开关 HTML 代码
+interactive_toggle_html = """
+<!-- 开关容器：绑定点击事件 -->
+<div id="toggleSwitch" data-show-ax-label="true" data-state="On" 
+     style="width: 64px; padding: 2px; background: #34C759; overflow: hidden; border-radius: 100px; 
+     justify-content: space-between; align-items: center; display: inline-flex; cursor: pointer;">
+  <!-- 关闭状态的竖线（默认隐藏） -->
+  <div data-svg-wrapper id="offLine" style="display: none;">
+    <svg width="21" height="10" viewBox="0 0 21 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="10" width="1" height="10" fill="white"/>
+    </svg>
+  </div>
+  <!-- 开关滑块 -->
+  <div data-svg-wrapper id="toggleKnob" style="position: relative; transition: transform 0.3s ease;">
+    <svg width="39" height="24" viewBox="0 0 39 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="39" height="24" rx="12" fill="white"/>
+    </svg>
+  </div>
+</div>
+
+<!-- 状态显示文本 -->
+<div id="toggleStatus" style="margin-top: 10px; font-size: 16px; font-family: Inter; color: #333;">
+  状态：开启（On）
+</div>
+
+<!-- JavaScript 交互逻辑 -->
+<script>
+// 获取开关元素
+const toggleSwitch = document.getElementById('toggleSwitch');
+const toggleKnob = document.getElementById('toggleKnob');
+const offLine = document.getElementById('offLine');
+const toggleStatus = document.getElementById('toggleStatus');
+
+// 绑定点击事件（兼容不同浏览器）
+if (toggleSwitch.addEventListener) {
+  toggleSwitch.addEventListener('click', toggleState);
+} else if (toggleSwitch.attachEvent) {  // 兼容旧版IE（可选）
+  toggleSwitch.attachEvent('onclick', toggleState);
+}
+
+// 状态切换函数
+function toggleState() {
+  const currentState = toggleSwitch.getAttribute('data-state');
+  
+  if (currentState === 'On') {
+    // 切换到 Off 状态
+    toggleSwitch.setAttribute('data-state', 'Off');
+    toggleSwitch.style.background = '#D9D9D9';
+    toggleKnob.style.transform = 'translateX(-25px)';
+    offLine.style.display = 'block';
+    toggleStatus.textContent = '状态：关闭（Off）';
+  } else {
+    // 切换到 On 状态
+    toggleSwitch.setAttribute('data-state', 'On');
+    toggleSwitch.style.background = '#34C759';
+    toggleKnob.style.transform = 'translateX(0)';
+    offLine.style.display = 'none';
+    toggleStatus.textContent = '状态：开启（On）';
+  }
+}
+</script>
+"""
+
+# Streamlit 页面
+st.title("可交互开关插件演示")
+st.subheader("点击开关切换 On/Off 状态")
+
+# 嵌入交互开关（改用 components.v1.html，参数更稳定）
+html(
+    interactive_toggle_html,  # 直接传HTML字符串（位置参数，避免关键字参数问题）
+    width=100,
+    height=80,
+    scrolling=False
+)
+
 
 try:
     GITHUB_TOKEN = st.secrets["github"]["token"]
