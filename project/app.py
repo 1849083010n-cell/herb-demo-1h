@@ -7,7 +7,7 @@ import os
 import streamlit as st
 html_code = """
 <div style="width: 750px; height: 47px; background: #D9D9D9; text-align: center; color: black; font-size: 36px;">
-  What should I build next?
+  提问
 </div>
 """
 
